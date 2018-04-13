@@ -1,0 +1,86 @@
+<div class="ticket-window">
+  <div class="window-title fade-in">
+    <span class="close-button">&times;</span>
+    <div>
+      <h5>Ticket Window</h5>
+      <hr>
+    </div>
+
+    <div class="window-content">
+      <div class="order-info alert alert-warning">
+        <p> 
+          <strong> <%= showtime.movie.title %> </strong> | 
+          <%= showtime.pretty_time %>
+        </p>
+        <p>
+           <%= number_to_currency(showtime.price) %> |
+           <%= showtime.number_of_seats_available %> <%= 'seat'.pluralize(showtime.number_of_seats_available) %> available.
+        </p>
+      </div>
+
+      <%= form_with(scope: :order, url: orders_path, remote: true) do |form| %>
+
+        <%= form.hidden_field :showtime_id, value: showtime.id %>
+
+        <div class="form-group">  
+          <label for="name">Your name</label>
+          <%= form.text_field :name,
+              class: 'form-control',
+              autocomplete: 'name',
+              required: true %>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <%= form.email_field :email,
+              class: 'form-control',
+              autocomplete: 'email',
+              required: true  %>
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <%= form.select :quantity,
+                  ( 1..showtime.number_of_seats_available ).to_a,
+                  {},
+                  { class: 'quantity form-control', 'data-price': showtime.price } %>
+            </div>
+
+          </div>
+          <div class="col">
+
+            <div class="form-group">
+              <label for="total_price">Total Price</label>
+              <div class="alert alert-info">
+                <strong class="total-price">
+                  <%= number_to_currency(showtime.price) %>
+                </strong>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="credit_card">Credit Card</label>
+          <%= form.text_field :credit_card,
+              class: 'form-control',
+              autocomplete: 'cc-number',
+              required: true  %>
+        </div>
+
+        <div class="form-group">
+          <label for="expiration_month">Expiration Month</label>
+          <%= form.month_field :expiration_month,
+              class: 'form-control' %>
+        </div>
+
+        <%= form.submit 'Order', class: 'btn btn-primary' %>
+      <% end %>
+
+    </div>
+  </div>
+</div>

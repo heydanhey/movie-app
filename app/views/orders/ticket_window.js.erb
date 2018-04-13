@@ -1,0 +1,30 @@
+document.querySelector('.ticket-window-container').innerHTML =
+  "<%= escape_javascript (render 'ticket_window', showtime: @showtime )%>";
+
+var $ticketWindow = document.querySelector('.ticket-window');
+$ticketWindow.classList.add('show-ticket-window');
+
+var $closeBtn = $ticketWindow.querySelector('.close-button');
+$closeBtn.addEventListener('click', close);
+
+var $quantitySelect = $ticketWindow.querySelector('.quantity');
+$quantitySelect.addEventListener('change', updateTotalPrice);
+
+function updateTotalPrice() {
+  var quantity = this.options[this.options.selectedIndex].value,
+    price= this.dataset.price;
+  var totalPrice = quantity * price;
+    
+  this
+    .closest('.ticket-window')
+    .querySelector('.total-price')
+    .innerHTML = '$' + totalPrice.toFixed(2);
+}
+
+function close() {
+  this
+    .closest('.ticket-window')
+    .classList
+    .remove('show-ticket-window');
+}
+

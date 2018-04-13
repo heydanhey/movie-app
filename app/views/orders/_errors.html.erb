@@ -1,0 +1,11 @@
+<% if errors.any? %>
+  <div class="alert alert-warning">
+    <h5>Snap!</h5>
+    <p><%= pluralize(errors.count, "error") %> prohibited this from being saved:</p>
+    <ul>
+    <% errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

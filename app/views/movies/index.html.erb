@@ -1,0 +1,41 @@
+<div class="container">
+  <span class="h2"> Showing on:
+    <strong>
+      <%= @date.strftime('%A, %b %d') %>
+    </strong>
+    <%= link_to 'Previous Day',
+        "#{movies_path}?date=#{(@date - 1)}",
+        class: "btn btn-sm btn-dark #{'disabled' if @date.today?}" %>
+    <%= link_to 'Next Day',
+        "#{movies_path}?date=#{(@date + 1)}",
+        class: 'btn btn-sm btn-dark' %>
+  </span>
+</div>
+
+<div class="container">
+  <hr>
+</div>
+
+<div class="container">
+  <% @movies.each do |movie| %>
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-3">
+        <%= image_tag movie.image_url, class: 'img-fluid' %>
+      </div>
+      <div class="col-md-9">
+        <h3><%= movie.title %></h3>
+        <p><%= movie.description %></p>
+        <% movie.showtimes.each do |showtime| %>
+          <% if showtime.is_today?(@date) %>
+            <%= link_to showtime.time.strftime('%l:%M  %p'),
+                ticket_window_path(showtime.id),
+                remote: true,
+                class: "btn btn-sm btn-primary #{'disabled sold-out' if showtime.is_sold_out?}" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="ticket-window-container"></div>

@@ -1,0 +1,8 @@
+{
+  "name": "movie-app",
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "moment": "^2.22.0"
+  }
+}

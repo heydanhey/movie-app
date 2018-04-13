@@ -1,0 +1,16 @@
+var $ticketWindow = document.querySelector('.ticket-window');
+var $windowContent = $ticketWindow.querySelector('.window-content');
+var $closeBtn = $ticketWindow.querySelector('.close-button');
+$closeBtn.addEventListener('click', reload);
+
+if (!<%= @order.errors.empty? %>) {
+  $windowContent.innerHTML = '<%= escape_javascript ( render 'errors', errors: @order.errors )%>'
+} else {
+  $windowContent.innerHTML = '<%= escape_javascript ( render 'success', order: @order )%>'
+}
+
+function reload() {
+  location.reload();
+}
+
+
