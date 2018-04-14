@@ -14,6 +14,6 @@
 //= require activestorage
 //= require turbolinks
 //= require vue
-//= require lodash/lodash
-//= require moment/moment
+//= require lodash
+//= require moment
 //= require_tree .
