@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? confirm_date(params[:date]) : Date.today
     @movies = Movie.showing_today(@date)
   end
 
@@ -71,5 +71,15 @@ class MoviesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
       params.require(:movie).permit(:title, :rating, :image_url, :description)
+    end
+
+    def confirm_date(d)
+      begin
+        date = Date.parse(d)
+      rescue ArgumentError => e
+        puts e.message
+        return Date.today
+      end
+      date
     end
 end
