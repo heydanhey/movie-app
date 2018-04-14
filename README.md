@@ -20,4 +20,8 @@ A simple movie theater web application.
 
 `rails s`
 
-
+##### root path: `/` or `/movies`:
+* shows a list of all movies playing today.
+* click an available showtime to purchase tickets.
+##### orders path: `/orders`:
+* show a list of all orders
